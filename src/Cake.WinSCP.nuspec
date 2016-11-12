@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>Cake.WinSCP</id>
+    <title>Cake.WinSCP</title>
+    <version>0.1.0</version>
+    <authors>Ilya Verbitskiy</authors>
+    <owners>Ilya Verbitskiy</owners>
+    <description>Cake AddIn to upload files using WinSCP.</description>
+    <licenseUrl>https://github.com/ilich/Cake.WinSCP/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/ilich/Cake.WinSCP</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <copyright>Copyright © 2016 Ilya Verbitskiy</copyright>
+    <tags>Cake Deployment</tags>
+  </metadata>
+  <files>
+    <file src="Cake.WinSCP/bin/Release/Cake.WinSCP.dll" />
+    <file src="Cake.WinSCP/bin/Release/Cake.WinSCP.dll.config" />
+    <file src="Cake.WinSCP/bin/Release/Cake.WinSCP.pdb" />
+    <file src="Cake.WinSCP/bin/Release/Cake.WinSCP.XML" />
+    <file src="Cake.WinSCP/bin/Release/WinSCP.exe" />
+    <file src="Cake.WinSCP/bin/Release/WinSCPnet.dll" />
+  </files>
+</package>
