@@ -3,7 +3,7 @@
   <metadata>
     <id>Cake.WinSCP</id>
     <title>Cake.WinSCP</title>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
     <authors>Ilya Verbitskiy</authors>
     <owners>Ilya Verbitskiy</owners>
     <description>Cake AddIn to upload files using WinSCP.</description>
