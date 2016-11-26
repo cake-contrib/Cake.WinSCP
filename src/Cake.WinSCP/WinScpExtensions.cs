@@ -50,7 +50,7 @@ namespace Cake.WinSCP
 
             Logger.LogEngine = context.Log;
 
-            var runner = new WinScpRunner();
+            var runner = new WinScpRunner(context);
             runner.SynchronizeDirectories(url, remoteFolder, localFolder, removeFiles);
         }
     }

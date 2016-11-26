@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Cake.Core;
 using WinSCP;
 
 namespace Cake.WinSCP
@@ -9,6 +10,22 @@ namespace Cake.WinSCP
     /// </summary>
     public class WinScpRunner
     {
+        private readonly ICakeContext _context;
+
+        /// <summary>
+        /// Creates an instance of WinScpRunner class.
+        /// </summary>
+        /// <param name="context">Cake context.</param>
+        public WinScpRunner(ICakeContext context)
+        {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
+            _context = context;
+        }
+
         /// <summary>
         /// Synchronizes directories.
         /// </summary>
@@ -44,6 +61,7 @@ namespace Cake.WinSCP
 
             var sessionOptions = new SessionOptions();
             sessionOptions.ParseUrl(url);
+            sessionOptions.AddRawSettings("LocalDirectory", _context.Environment.WorkingDirectory.FullPath);
 
             using (var session = new Session())
             {
