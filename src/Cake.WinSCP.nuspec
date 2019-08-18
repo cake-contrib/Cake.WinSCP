@@ -3,15 +3,16 @@
   <metadata>
     <id>Cake.WinSCP</id>
     <title>Cake.WinSCP</title>
-    <version>0.3.0</version>
+    <version>0.0.0</version>
     <authors>Ilya Verbitskiy</authors>
-    <owners>Ilya Verbitskiy</owners>
-    <description>Cake AddIn to upload files using WinSCP.</description>
-    <licenseUrl>https://github.com/ilich/Cake.WinSCP/blob/master/LICENSE</licenseUrl>
-    <projectUrl>https://github.com/ilich/Cake.WinSCP</projectUrl>
+    <owners>Ilya Verbitskiy,cake-contrib</owners>
+    <description>Cake Addin to upload files using WinSCP.</description>
+    <projectUrl>https://github.com/cake-contrib/Cake.WinSCP</projectUrl>
     <iconUrl>https://cdn.jsdelivr.net/gh/cake-contrib/graphics/png/cake-contrib-medium.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <copyright>Copyright © 2018 Ilya Verbitskiy</copyright>
+    <license type="expression">MIT</license>
+    <repository type="git" url="https://github.com/cake-contrib/Cake.WinSCP.git"/>
     <tags>Cake Deployment</tags>
   </metadata>
   <files>
