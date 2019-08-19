@@ -4,9 +4,9 @@
     <id>Cake.WinSCP</id>
     <title>Cake.WinSCP</title>
     <version>0.0.0</version>
-    <authors>Ilya Verbitskiy</authors>
-    <owners>Ilya Verbitskiy,cake-contrib</owners>
-    <description>Cake Addin to upload files using WinSCP.</description>
+    <authors>Ilya Verbitskiy,igloo1586</authors>
+    <owners>Ilya Verbitskiy,cake-contrib,igloo1586</owners>
+    <description>Cake Addin for using WinSCP.</description>
     <projectUrl>https://github.com/cake-contrib/Cake.WinSCP</projectUrl>
     <iconUrl>https://cdn.jsdelivr.net/gh/cake-contrib/graphics/png/cake-contrib-medium.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
