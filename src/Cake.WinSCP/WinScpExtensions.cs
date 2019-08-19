@@ -37,7 +37,7 @@ namespace Cake.WinSCP
         /// </code>
         /// </example>
         [CakeMethodAlias]
-        public static void WinScpSync(
+        public static ICakeContext WinScpSync(
             this ICakeContext context,
             string url,
             string remoteFolder,
@@ -53,6 +53,8 @@ namespace Cake.WinSCP
 
             var runner = new WinScpRunner(context);
             runner.SynchronizeDirectories(url, remoteFolder, localFolder, removeFiles);
+
+            return context;
         }
 
         /// <summary>
