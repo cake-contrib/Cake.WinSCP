@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
 using Cake.Core;
 using WinSCP;
 
@@ -8,7 +9,7 @@ namespace Cake.WinSCP
     /// <summary>
     /// Cake wrapper for WinSCP.
     /// </summary>
-    public class WinScpRunner
+    internal class WinScpRunner
     {
         private readonly ICakeContext _context;
 
@@ -73,6 +74,132 @@ namespace Cake.WinSCP
                 result.Check();
 
                 Logger.Log($"{localFolder} and {remoteFolder} were synchronized");
+            }
+        }
+
+        public void SynchronizeDirectories(SessionOptions options,
+            string remoteFolder,
+            string localFolder,
+            bool removeFiles = false,
+            SynchronizationMode mode = SynchronizationMode.Remote,
+            bool mirror = false,
+            SynchronizationCriteria criteria = SynchronizationCriteria.Time,
+            TransferOptions transferOptions = null)
+        {
+            options.AddRawSettings("LocalDirectory", _context.Environment.WorkingDirectory.FullPath);
+
+            using (var session = new Session())
+            {
+                session.FileTransferred += OnFileTransferred;
+                session.Open(options);
+                session.FileExists(remoteFolder);
+                session.CreateDirectory(remoteFolder);
+                var result = session.SynchronizeDirectories(mode, localFolder, remoteFolder, removeFiles, mirror, criteria, transferOptions);
+                result.Check();
+
+                Logger.Log($"{localFolder} and {remoteFolder} were synchronized");
+            }
+        }
+
+        public void PutFiles(SessionOptions options,
+            string remoteFolder,
+            string localFolder,
+            bool removeFiles = false,
+            TransferOptions transferOptions = null)
+        {
+            options.AddRawSettings("LocalDirectory", _context.Environment.WorkingDirectory.FullPath);
+
+            using (var session = new Session())
+            {
+                session.FileTransferred += OnFileTransferred;
+                session.Open(options);
+                session.FileExists(remoteFolder);
+                session.CreateDirectory(remoteFolder);
+                var result = session.PutFiles(localFolder, remoteFolder, removeFiles, transferOptions);
+                result.Check();
+
+                Logger.Log($"{localFolder} was pushed to {remoteFolder}");
+            }
+        }
+
+        public IEnumerable<RemoteFileInfo> GetFileList(SessionOptions options, string remoteFolder)
+        {
+            options.AddRawSettings("LocalDirectory", _context.Environment.WorkingDirectory.FullPath);
+
+            using (var session = new Session())
+            {
+                session.Open(options);
+                var result = session.ListDirectory(remoteFolder);
+
+                Logger.Log($"{remoteFolder} list was queried");
+                return result.Files;
+            }
+        }
+
+        public void GetFiles(SessionOptions options,
+            string remoteFolder,
+            string localFolder,
+            bool removeFiles = false,
+            TransferOptions transferOptions = null)
+        {
+            options.AddRawSettings("LocalDirectory", _context.Environment.WorkingDirectory.FullPath);
+
+            using (var session = new Session())
+            {
+                session.Open(options);
+                var result = session.GetFiles(remoteFolder, localFolder, removeFiles, transferOptions);
+                result.Check();
+                Logger.Log($"{remoteFolder} was downloaded to {localFolder}");
+            }
+        }
+
+        public IEnumerable<ComparisonDifference> CompareDirectories(SessionOptions options,
+            string remoteFolder,
+            string localFolder,
+            bool logDifferences = false,
+            bool removeFiles = false,
+            SynchronizationMode mode = SynchronizationMode.Remote,
+            bool mirror = false,
+            SynchronizationCriteria criteria = SynchronizationCriteria.Time,
+            TransferOptions transferOptions = null)
+        {
+            options.AddRawSettings("LocalDirectory", _context.Environment.WorkingDirectory.FullPath);
+
+            using (var session = new Session())
+            {
+                session.Open(options);
+                Logger.Log($"{localFolder} and {remoteFolder} are being compared");
+                var result = session.CompareDirectories(mode, localFolder, remoteFolder, removeFiles, mirror, criteria, transferOptions) as IEnumerable<ComparisonDifference>;
+                if (logDifferences)
+                {
+                    if (result == null)
+                    {
+                        Logger.Log("Compare Result was Null");
+                        return result;
+                    }
+                    Logger.Log(String.Format("|{0,16}|{1,10}|{2,20}|{3,20}|", "Action".PadRight(16), "Directory".PadRight(10), "Local File Name".PadRight(20), "Remote File Name".PadRight(20)));
+                    foreach (var diff in result)
+                    {
+                        var localFile = diff?.Local?.FileName;
+                        if (String.IsNullOrEmpty(localFile))
+                        {
+                            localFile = Path.GetFileName(localFile);
+                        }
+
+                        var remoteFile = diff?.Remote?.FileName;
+                        if (!String.IsNullOrEmpty(remoteFile))
+                        {
+                            remoteFile = Path.GetFileName(remoteFile);
+                        }
+
+                        Logger.Log(String.Format("|{0,16}|{1,10}|{2,20}|{3,20}|",
+                            diff?.Action.ToString().PadRight(16),
+                            diff?.IsDirectory.ToString().PadRight(10),
+                            localFile?.PadRight(20),
+                            remoteFile?.PadRight(20)));
+                    }
+                }
+                return result;
             }
         }
 
