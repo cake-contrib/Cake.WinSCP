@@ -1,6 +1,8 @@
 # Cake.WinSCP
 Cake AddIn to upload files using WinSCP.
 
+[![Nuget](https://img.shields.io/nuget/vpre/Cake.WinSCP.svg?label=Cake.WinSCP)](https://www.nuget.org/packages/Cake.WinSCP/)
+
 ## Example usage
 
 ### Basic Usage
