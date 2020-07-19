@@ -92,8 +92,10 @@ namespace Cake.WinSCP
             {
                 session.FileTransferred += OnFileTransferred;
                 session.Open(options);
-                session.FileExists(remoteFolder);
-                session.CreateDirectory(remoteFolder);
+                if (!session.FileExists(remoteFolder))
+                {
+                    session.CreateDirectory(remoteFolder);
+                }
                 var result = session.SynchronizeDirectories(mode, localFolder, remoteFolder, removeFiles, mirror, criteria, transferOptions);
                 result.Check();
 
@@ -113,8 +115,10 @@ namespace Cake.WinSCP
             {
                 session.FileTransferred += OnFileTransferred;
                 session.Open(options);
-                session.FileExists(remoteFolder);
-                session.CreateDirectory(remoteFolder);
+                if (!session.FileExists(remoteFolder))
+                {
+                    session.CreateDirectory(remoteFolder);
+                }
                 var result = session.PutFiles(localFolder, remoteFolder, removeFiles, transferOptions);
                 result.Check();
 
